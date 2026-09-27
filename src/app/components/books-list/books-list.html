@@ -1,0 +1,27 @@
+<h1>Libros</h1>
+
+<a routerLink="/books/new">Crear libro</a>
+
+<table>
+  <thead>
+    <tr>
+      <th>Título</th>
+      <th>ISBN</th>
+      <th>Año</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (book of books(); track book._id) {
+      <tr>
+        <td>{{ book.title }}</td>
+        <td>{{ book.isbn }}</td>
+        <td>{{ book.publishedYear }}</td>
+        <td>
+          <button (click)="borrarLibro(book._id)">Borrar</button>
+          <a [routerLink]="['/books', book._id, 'edit']">Editar</a>
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>

@@ -1,0 +1,51 @@
+<h1>{{ bookId ? 'Editar libro' : 'Crear libro' }}</h1>
+
+<form [formGroup]="form" (ngSubmit)="guardar()">
+  <div>
+    <label>Título</label>
+    <input type="text" formControlName="title">
+  </div>
+  <div>
+    <label>ISBN</label>
+    <input type="text" formControlName="isbn">
+  </div>
+  <div>
+    <label>Edición</label>
+    <input type="number" formControlName="edition">
+  </div>
+  <div>
+    <label>Editorial</label>
+    <input type="text" formControlName="publisher">
+  </div>
+  <div>
+    <label>Año publicación</label>
+    <input type="number" formControlName="publishedYear">
+  </div>
+  <div>
+    <label>Páginas</label>
+    <input type="number" formControlName="pages">
+  </div>
+  <div>
+    <label>Idioma</label>
+    <input type="text" formControlName="language">
+  </div>
+  <div>
+    <label>Precio</label>
+    <input type="number" formControlName="price">
+  </div>
+
+  <div>
+    <label>Nombre del autor</label>
+    <input type="text" formControlName="authorName" placeholder="Si no existe, se creará">
+  </div>
+  <div>
+    <label>Email del autor (solo si es nuevo)</label>
+    <input type="email" formControlName="authorEmail">
+  </div>
+  <div>
+    <label>Contraseña del autor (solo si es nuevo)</label>
+    <input type="password" formControlName="authorPassword">
+  </div>
+
+  <button type="submit" [disabled]="form.invalid">Guardar</button>
+</form>
