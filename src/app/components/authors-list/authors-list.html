@@ -1,5 +1,5 @@
 <h1>Autores</h1>
-
+<a routerLink="/authors/new">Crear autor</a>
 <table>
   <thead>
     <tr>
@@ -14,6 +14,9 @@
         <td>{{ author.name }}</td>
         <td>{{ author.email }}</td>
         <td>{{ author.nationality }}</td>
+        <td> <button (click)="borrarAutor(author._id)">Borrar</button>
+        <a [routerLink]="['/authors', author._id, 'edit']">Editar</a>
+        </td>
       </tr>
     }
   </tbody>

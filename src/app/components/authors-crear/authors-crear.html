@@ -1,0 +1,37 @@
+<h1>{{ authorId ? 'Editar autor' : 'Crear autor' }}</h1>
+
+<form [formGroup]="form" (ngSubmit)="guardar()">
+  <div>
+    <label>Nombre</label>
+    <input type="text" formControlName="name">
+    @if (form.controls.name.invalid && form.controls.name.touched) {
+      <span>El nombre es obligatorio</span>
+    }
+  </div>
+
+  <div>
+    <label>Email</label>
+    <input type="email" formControlName="email">
+    @if (form.controls.email.invalid && form.controls.email.touched) {
+      <span>Introduce un email válido</span>
+    }
+  </div>
+
+  <div>
+    <label>Contraseña {{ authorId ? '(dejar en blanco para no cambiarla)' : '' }}</label>
+    <input type="password" formControlName="password">
+    @if (form.controls.password.invalid && form.controls.password.touched) {
+      <span>Mínimo 6 caracteres</span>
+    }
+  </div>
+
+  <div>
+    <label>Nacionalidad</label>
+    <input type="text" formControlName="nationality">
+    @if (form.controls.nationality.invalid && form.controls.nationality.touched) {
+      <span>La nacionalidad es obligatoria</span>
+    }
+  </div>
+
+  <button type="submit" [disabled]="form.invalid">Guardar</button>
+</form>
