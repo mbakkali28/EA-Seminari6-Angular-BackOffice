@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { Author } from '../../models';
 import { AuthorService } from '../../services/author.service';
 import { RouterLink } from '@angular/router';
@@ -13,6 +13,18 @@ export class AuthorsList implements OnInit {
   private authorService = inject(AuthorService);
 
   authors = signal<Author[]>([]);
+paginaActual = signal(1);
+  porPagina = 5;
+
+  
+  totalPaginas = computed(() =>
+    Math.ceil(this.authors().length / this.porPagina)
+  );
+
+  authorsPagina = computed(() => {
+    const inicio = (this.paginaActual() - 1) * this.porPagina;
+    return this.authors().slice(inicio, inicio + this.porPagina);
+  });
 
   ngOnInit(): void {
     this.authorService.getAuthors().subscribe({
@@ -27,12 +39,24 @@ export class AuthorsList implements OnInit {
   borrarAutor(id: string): void {
     this.authorService.deleteAuthor(id).subscribe({
       next: () => {
-        // Quitamos el autor borrado de la lista, sin volver a pedir todo a la API
+        
         this.authors.update(lista => lista.filter(a => a._id !== id));
       },
       error: (err) => {
         console.error('Error borrando autor', err);
       }
     });
+  }
+
+   paginaAnterior(): void {
+    if (this.paginaActual() > 1) {
+      this.paginaActual.update(p => p - 1);
+    }
+  }
+
+  paginaSiguiente(): void {
+    if (this.paginaActual() < this.totalPaginas()) {
+      this.paginaActual.update(p => p + 1);
+    }
   }
 }
